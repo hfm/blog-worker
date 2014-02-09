@@ -1,33 +1,21 @@
 #!/bin/bash 
-set -eux
-PATH=/usr/local/src/blog/vendor/ruby/2.1.0/bin:/usr/local/ruby-2.1.0/bin:$PATH
+set -eu
 
-LANG=en_US.UTF-8
-LANGUAGE=en_US.UTF-8
-LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
 
 GIT_LOCATION=/usr/local/src/blog
 REPO=git@github.com:Tacahilo/blog.git
 WWW_LOCATION=/var/www/blog
+BUNDLE_GEMFILE=$GIT_LOCATION/Gemfile
 
-update_repo() {
-    [ -d $GIT_LOCATION ] || mkdir -p $GIT_LOCATION
-    cd $GIT_LOCATION
-    [ -d ./.git ] || git clone $REPO .
-    git pull origin master
-}
+# update_repo
+[ -d $GIT_LOCATION ] || mkdir -p $GIT_LOCATION
+[ -d $GIT_LOCATION/.git ] || git clone $REPO $GIT_LOCATION
+cd $GIT_LOCATION && git pull origin master
 
-build() {
-    BUNDLE_GEMFILE=$GIT_LOCATION/Gemfile
-    [ -d ./.bundle ] || bundle install --path vendor
-    bundle exec rake build
-}
-
-main() {
-    update_repo
-    build
-    rsync -a --delete $GIT_LOCATION/_site/ $WWW_LOCATION
-}
-
-main
-env
+# build and sync
+[ -d ./.bundle ] || bundle install --path vendor
+bundle exec rake build
+rsync -a --delete $GIT_LOCATION/_site/ $WWW_LOCATION
