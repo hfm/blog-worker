@@ -1,0 +1,10 @@
+# exec Graph::Easy
+[ local ] - 1. Push -> [ github ] - 2. WebHook -> [ blog_worker.rb ]
+[ blog_worker.rb ] - 3. Pull -> [ github ]
+( server
+  [ blog_worker.rb ] - 4. exec -> [ build.sh ]
+  [ build.sh ] - 5. Build and Sync -> [ blog directory ]
+) {
+  border-style: dotted;
+  flow: south;
+}
