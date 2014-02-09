@@ -3,11 +3,11 @@
 require 'sinatra'
 require 'json'
 
-here = File.dirname(__FILE__)
-SYNC_SCRIPT = "#{here}/build.sh"
+dir = File.dirname(__FILE__)
+SYNC_SCRIPT = "#{dir}/build.sh"
 
 post "/" do
   push = JSON.parse(params[:payload])
-  system(SYNC_SCRIPT)
+  system(SYNC_SCRIPT) if push["repository"]["id"] == 11420983
   "ok."
 end
