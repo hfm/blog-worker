@@ -8,6 +8,9 @@ SYNC_SCRIPT = "#{dir}/build.sh"
 
 post "/" do
   push = JSON.parse(params[:payload])
-  system(SYNC_SCRIPT) if push["repository"]["id"] == 11420983
-  "ok."
+  if push["repository"]["id"] == 11420983
+    pid = Process.spawn(SYNC_SCRIPT, :out => '/dev/null', :err => '/dev/null')
+    Process.detach pid
+    "ok."
+  end
 end
