@@ -1,7 +1,7 @@
 #!/bin/bash 
 set -e
 
-PATH=/usr/local/ruby-2.1.0/bin:$PATH
+PATH=/usr/local/ruby-2.1.2/bin:$PATH
 LANG=ja_JP.UTF-8
 LANGUAGE=ja_JP.UTF-8
 LC_ALL=ja_JP.UTF-8
