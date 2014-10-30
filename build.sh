@@ -17,9 +17,6 @@ BUNDLE_GEMFILE=$GIT_LOCATION/Gemfile
 cd $GIT_LOCATION && git pull origin master
 
 # build and sync
-bundle install --path vendor
-bundle update
-bundle exec rake build
+bundle install --path vendor --binstubs
+bin/rake build
 rsync -az --delete $GIT_LOCATION/_site/ $WWW_LOCATION
-
-varnishadm -T 127.0.0.1:6082 -S /etc/varnish/secret purge.url .
