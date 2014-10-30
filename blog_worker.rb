@@ -3,7 +3,7 @@
 require 'sinatra'
 require 'json'
 
-dir = File.dirname(__FILE__)
+dir = File.expand_path(File.dirname(__FILE__))
 SYNC_SCRIPT = "#{dir}/build.sh"
 
 post "/" do
